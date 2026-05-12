@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario Mondiale 2026</title>
+    <!-- Import Inter Font -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; padding: 40px; background-color: #fff; color: #333; line-height: 1.5; }
+        .container { max-width: 900px; margin: auto; }
+        
+        /* Dropdown Styling */
+        .header-section { margin-bottom: 30px; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+        select { 
+            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; 
+            font-family: 'Inter', sans-serif; font-size: 16px; background-color: #f9f9f9; cursor: pointer;
+        }
+
+        /* Table Styling */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { 
+            border-bottom: 2px solid #1a1a1a; text-align: left; padding: 12px 8px; 
+            font-size: 13px; font-weight: 700; text-transform: uppercase; color: #1a1a1a;
+        }
+        td { padding: 16px 8px; border-bottom: 1px solid #eee; font-size: 15px; vertical-align: middle; }
+        
+        /* Flag and Team Layout */
+        .match-wrapper { display: flex; align-items: center; font-weight: 600; }
+        .team { display: flex; align-items: center; gap: 8px; }
+        .vs { margin: 0 12px; font-weight: 400; color: #999; font-size: 13px; }
+        
+        .flag {
+            width: 28px; height: auto; aspect-ratio: 16/9; object-fit: cover;
+            border-radius: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); border: 1px solid #eee;
+        }
+
+        .date-cell { color: #666; width: 15%; font-weight: 400; }
+        .venue-cell { color: #555; width: 30%; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-section">
+        <label for="group-select">Visualizza Calendario:</label>
+        <select id="group-select" onchange="updateTable()">
+            <option value="A">GRUPPO A</option>
+            <option value="B">GRUPPO B</option>
+            <option value="C">GRUPPO C</option>
+            <option value="D">GRUPPO D</option>
+            <option value="E">GRUPPO E</option>
+            <option value="F">GRUPPO F</option>
+            <option value="G">GRUPPO G</option>
+            <option value="H">GRUPPO H_</option>
+            <option value="I">GRUPPO I</option>
+            <option value="J">GRUPPO J</option>
+            <option value="K">GRUPPO K</option>
+            <option value="L">GRUPPO L</option>
+        </select>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Incontro</th>
+                <th>Sede</th>
+            </tr>
+        </thead>
+        <tbody id="table-content"></tbody>
+    </table>
+</div>
+
+<script>
+    // Data Structure: [Date, Team1, ISO1, Team2, ISO2, Venue]
+    const schedules = {
+        A: [
+            ["11 Giu", "Messico", "mx", "Sudafrica", "za", "Città del Messico"],
+            ["12 Giu", "Corea del Sud", "kr", "Rep. Ceca", "cz", "Guadalajara"],
+            ["18 Giu", "Rep. Ceca", "cz", "Sudafrica", "za", "Atlanta"]
+        ],
+        B: [
+            ["12 Giu", "Canada", "ca", "Bosnia ed Erzegovina", "ba", "Toronto"],
+            ["13 Giu", "Qatar", "qa", "Svizzera", "ch", "San Francisco"],
+            ["18 Giu", "Svizzera", "ch", "Bosnia ed Erzegovina", "ba", "Los Angeles"]
+        ],
+        C: [
+            ["14 Giu", "Haiti", "ht", "Scozia", "gb-sct", "Boston"],
+            ["14 Giu", "Brasile", "br", "Marocco", "ma", "New York/NJ"]
+        ],
+        D: [
+            ["13 Giu", "USA", "us", "Paraguay", "py", "Los Angeles"],
+            ["14 Giu", "Australia", "au", "Turchia", "tr", "Vancouver"]
+        ],
+        E: [
+            ["14 Giu", "Costa d'Avorio", "ci", "Ecuador", "ec", "Philadelphia"],
+            ["14 Giu", "Germania", "de", "Curaçao", "cw", "Houston"]
+        ],
+        F: [
+            ["14 Giu", "Paesi Bassi", "nl", "Giappone", "jp", "Dallas"],
+            ["15 Giu", "Svezia", "se", "Tunisia", "tn", "Monterrey"]
+        ],
+        G: [
+            ["15 Giu", "Belgio", "be", "Egitto", "eg", "Seattle"],
+            ["16 Giu", "Iran", "ir", "Nuova Zelanda", "nz", "Los Angeles"]
+        ],
+        H: [
+            ["15 Giu", "Spagna", "es", "Cabo Verde", "cv", "Atlanta"],
+            ["15 Giu", "Arabia Saudita", "sa", "Uruguay", "uy", "Miami"]
+        ],
+        I: [
+            ["16 Giu", "Francia", "fr", "Senegal", "sn", "New York/NJ"],
+            ["16 Giu", "Iraq", "iq", "Norvegia", "no", "Boston"]
+        ],
+        J: [
+            ["16 Giu", "Argentina", "ar", "Algeria", "dz", "Kansas City"],
+            ["16 Giu", "Austria", "at", "Giordania", "jo", "San Francisco"]
+        ],
+        K: [
+            ["17 Giu", "Portogallo", "pt", "RD del Congo", "cd", "Houston"],
+            ["17 Giu", "Uzbekistan", "uz", "Colombia", "co", "Città del Messico"]
+        ],
+        L: [
+            ["17 Giu", "Ghana", "gh", "Panama", "pa", "Toronto"],
+            ["17 Giu", "Inghilterra", "gb-eng", "Croazia", "hr", "Dallas"]
+        ]
+    };
+
+    function updateTable() {
+        const group = document.getElementById("group-select").value;
+        const tbody = document.getElementById("table-content");
+        const matches = schedules[group] || [];
+
+        tbody.innerHTML = "";
+
+        matches.forEach(m => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td class="date-cell">${m[0]}</td>
+                <td>
+                    <div class="match-wrapper">
+                        <div class="team">
+                            <img src="https://flagcdn.com{m[2]}.png" class="flag"> <span>${m[1]}</span>
+                        </div>
+                        <span class="vs">vs</span>
+                        <div class="team">
+                            <img src="https://flagcdn.com{m[4]}.png" class="flag"> <span>${m[3]}</span>
+                        </div>
+                    </div>
+                </td>
+                <td class="venue-cell">${m[5]}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    // Initialize with Group A
+    updateTable();
+</script>
+
+</body>
+</html>
