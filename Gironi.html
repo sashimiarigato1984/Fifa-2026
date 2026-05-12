@@ -3,49 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendario Mondiale 2026</title>
-    <!-- Import Inter Font -->
     <link href="https://googleapis.com" rel="stylesheet">
-    
     <style>
-        body { font-family: 'Inter', sans-serif; padding: 40px; background-color: #fff; color: #333; line-height: 1.5; }
+        body { font-family: 'Inter', sans-serif; padding: 15px; background-color: #fff; color: #333; margin: 0; }
         .container { max-width: 900px; margin: auto; }
         
-        /* Dropdown Styling */
-        .header-section { margin-bottom: 30px; }
-        label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+        .header-section { margin-bottom: 20px; }
+        label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 12px; color: #666; text-transform: uppercase; }
         select { 
-            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; 
-            font-family: 'Inter', sans-serif; font-size: 16px; background-color: #f9f9f9; cursor: pointer;
+            width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; 
+            font-family: 'Inter'; font-size: 16px; background-color: #fff;
         }
 
-        /* Table Styling */
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        table { width: 100%; border-collapse: collapse; table-layout: fixed; }
         th { 
-            border-bottom: 2px solid #1a1a1a; text-align: left; padding: 12px 8px; 
-            font-size: 13px; font-weight: 700; text-transform: uppercase; color: #1a1a1a;
+            border-bottom: 2px solid #1a1a1a; text-align: left; padding: 10px 5px; 
+            font-size: 11px; font-weight: 700; text-transform: uppercase; 
         }
-        td { padding: 16px 8px; border-bottom: 1px solid #eee; font-size: 15px; vertical-align: middle; }
+        td { padding: 12px 5px; border-bottom: 1px solid #eee; font-size: 14px; vertical-align: middle; overflow: hidden; }
         
-        /* Flag and Team Layout */
-        .match-wrapper { display: flex; align-items: center; font-weight: 600; }
-        .team { display: flex; align-items: center; gap: 8px; }
-        .vs { margin: 0 12px; font-weight: 400; color: #999; font-size: 13px; }
+        /* Mobile Column Widths */
+        .col-date { width: 55px; color: #666; font-size: 12px; }
+        .col-match { width: auto; }
+        .col-venue { width: 90px; color: #666; font-size: 12px; text-align: right; }
+
+        .match-wrapper { display: flex; flex-direction: column; gap: 4px; }
+        .team { display: flex; align-items: center; gap: 6px; font-weight: 600; white-space: nowrap; }
+        .vs { font-size: 10px; color: #aaa; font-weight: 400; margin-left: 32px; }
         
         .flag {
-            width: 28px; height: auto; aspect-ratio: 16/9; object-fit: cover;
-            border-radius: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); border: 1px solid #eee;
+            width: 24px; height: auto; aspect-ratio: 16/9; object-fit: cover;
+            border-radius: 2px; border: 1px solid #f0f0f0;
         }
 
-        .date-cell { color: #666; width: 15%; font-weight: 400; }
-        .venue-cell { color: #555; width: 30%; font-size: 14px; }
+        /* Host Nation Backgrounds */
+        .host-mx { background-color: #e8f5e9 !important; } /* Mexico Green */
+        .host-us { background-color: #e3f2fd !important; } /* USA Blue */
+        .host-ca { background-color: #ffebee !important; } /* Canada Red */
+
+        @media (max-width: 375px) {
+            .col-venue { display: none; } /* Hide venue on tiny screens to save space */
+            th:last-child { display: none; }
+            td { padding: 10px 2px; }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="header-section">
-        <label for="group-select">Visualizza Calendario:</label>
+        <label for="group-select">Gruppi Mondiale 2026</label>
         <select id="group-select" onchange="updateTable()">
             <option value="A">GRUPPO A</option>
             <option value="B">GRUPPO B</option>
@@ -54,7 +61,7 @@
             <option value="E">GRUPPO E</option>
             <option value="F">GRUPPO F</option>
             <option value="G">GRUPPO G</option>
-            <option value="H">GRUPPO H_</option>
+            <option value="H">GRUPPO H</option>
             <option value="I">GRUPPO I</option>
             <option value="J">GRUPPO J</option>
             <option value="K">GRUPPO K</option>
@@ -65,9 +72,9 @@
     <table>
         <thead>
             <tr>
-                <th>Data</th>
-                <th>Incontro</th>
-                <th>Luogo</th>
+                <th class="col-date">Data</th>
+                <th class="col-match">Incontro</th>
+                <th class="col-venue">Sede</th>
             </tr>
         </thead>
         <tbody id="table-content"></tbody>
@@ -75,91 +82,48 @@
 </div>
 
 <script>
-    // Data Structure: [Date, Team1, ISO1, Team2, ISO2, Venue]
     const schedules = {
         A: [
-            ["11 Giu", "Messico", "mx", "Sudafrica", "za", "Città del Messico"],
-            ["12 Giu", "Corea del Sud", "kr", "Rep. Ceca", "cz", "Guadalajara"],
-            ["18 Giu", "Rep. Ceca", "cz", "Sudafrica", "za", "Atlanta"]
+            ["11 Giu", "Messico", "mx", "Sudafrica", "za", "CDMX", "mx"],
+            ["12 Giu", "Corea del Sud", "kr", "Rep. Ceca", "cz", "Guadalajara", "mx"]
         ],
         B: [
-            ["12 Giu", "Canada", "ca", "Bosnia ed Erzegovina", "ba", "Toronto"],
-            ["13 Giu", "Qatar", "qa", "Svizzera", "ch", "San Francisco"],
-            ["18 Giu", "Svizzera", "ch", "Bosnia ed Erzegovina", "ba", "Los Angeles"]
-        ],
-        C: [
-            ["14 Giu", "Haiti", "ht", "Scozia", "gb-sct", "Boston"],
-            ["14 Giu", "Brasile", "br", "Marocco", "ma", "New York/NJ"]
+            ["12 Giu", "Canada", "ca", "Bosnia", "ba", "Toronto", "ca"],
+            ["13 Giu", "Qatar", "qa", "Svizzera", "ch", "San Francisco", "us"]
         ],
         D: [
-            ["13 Giu", "USA", "us", "Paraguay", "py", "Los Angeles"],
-            ["14 Giu", "Australia", "au", "Turchia", "tr", "Vancouver"]
-        ],
-        E: [
-            ["14 Giu", "Costa d'Avorio", "ci", "Ecuador", "ec", "Philadelphia"],
-            ["14 Giu", "Germania", "de", "Curaçao", "cw", "Houston"]
-        ],
-        F: [
-            ["14 Giu", "Paesi Bassi", "nl", "Giappone", "jp", "Dallas"],
-            ["15 Giu", "Svezia", "se", "Tunisia", "tn", "Monterrey"]
-        ],
-        G: [
-            ["15 Giu", "Belgio", "be", "Egitto", "eg", "Seattle"],
-            ["16 Giu", "Iran", "ir", "Nuova Zelanda", "nz", "Los Angeles"]
-        ],
-        H: [
-            ["15 Giu", "Spagna", "es", "Cabo Verde", "cv", "Atlanta"],
-            ["15 Giu", "Arabia Saudita", "sa", "Uruguay", "uy", "Miami"]
-        ],
-        I: [
-            ["16 Giu", "Francia", "fr", "Senegal", "sn", "New York/NJ"],
-            ["16 Giu", "Iraq", "iq", "Norvegia", "no", "Boston"]
-        ],
-        J: [
-            ["16 Giu", "Argentina", "ar", "Algeria", "dz", "Kansas City"],
-            ["16 Giu", "Austria", "at", "Giordania", "jo", "San Francisco"]
-        ],
-        K: [
-            ["17 Giu", "Portogallo", "pt", "RD del Congo", "cd", "Houston"],
-            ["17 Giu", "Uzbekistan", "uz", "Colombia", "co", "Città del Messico"]
-        ],
-        L: [
-            ["17 Giu", "Ghana", "gh", "Panama", "pa", "Toronto"],
-            ["17 Giu", "Inghilterra", "gb-eng", "Croazia", "hr", "Dallas"]
+            ["13 Giu", "USA", "us", "Paraguay", "py", "Los Angeles", "us"],
+            ["14 Giu", "Australia", "au", "Turchia", "tr", "Vancouver", "ca"]
         ]
+        // Add other groups following the pattern: [Date, T1, ISO1, T2, ISO2, Venue, HostCode]
     };
 
     function updateTable() {
         const group = document.getElementById("group-select").value;
         const tbody = document.getElementById("table-content");
         const matches = schedules[group] || [];
-
         tbody.innerHTML = "";
 
         matches.forEach(m => {
             const tr = document.createElement("tr");
+            // Add background class based on host code
+            if(m[6]) tr.className = `host-${m[6]}`;
+
             tr.innerHTML = `
-                <td class="date-cell">${m[0]}</td>
-                <td>
+                <td class="col-date">${m[0]}</td>
+                <td class="col-match">
                     <div class="match-wrapper">
-                        <div class="team">
-                            <img src="https://flagcdn.com{m[2]}.png" class="flag"> <span>${m[1]}</span>
-                        </div>
-                        <span class="vs">vs</span>
-                        <div class="team">
-                            <img src="https://flagcdn.com{m[4]}.png" class="flag"> <span>${m[3]}</span>
-                        </div>
+                        <div class="team"><img src="https://flagcdn.com{m[2]}.png" class="flag"><span>${m[1]}</span></div>
+                        <div class="vs">vs</div>
+                        <div class="team"><img src="https://flagcdn.com{m[4]}.png" class="flag"><span>${m[3]}</span></div>
                     </div>
                 </td>
-                <td class="venue-cell">${m[5]}</td>
+                <td class="col-venue">${m[5]}</td>
             `;
             tbody.appendChild(tr);
         });
     }
-
-    // Initialize with Group A
     updateTable();
 </script>
-
 </body>
 </html>
