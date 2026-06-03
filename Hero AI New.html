@@ -14,158 +14,174 @@
     font-style: normal;
     font-weight: 800;
     font-stretch: normal;
+  }
 
-    
   /* ===== RESET ===== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-/* ===== HERO CONTAINER ===== */
-.hero {
-  position: relative;
-  width: 100%;
-  height: 100vh;   /* fallback */
-  height: 100dvh;  /* altezza dinamica su mobile */
-  overflow: hidden;
-}
+  /* ===== HERO CONTAINER ===== */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;   /* fallback */
+    height: 100dvh;  /* altezza dinamica su mobile */
+    overflow: hidden;
+  }
 
-/* ===== NAVBAR ASSOLUTA ===== */
-.navbar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100px;
-  background: rgba(0, 0, 0, 0.9);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  padding: 0 2rem;
-  z-index: 10;
-}
+  /* ===== NAVBAR ASSOLUTA ===== */
+  .navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    z-index: 10;
+  }
 
-/* ===== VIDEO DI SFONDO ===== */
-.hero__video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: bottom center;  /* base del video ancorata in basso */
-  background: #000;
-  z-index: 0;
-}
+  /* ===== VIDEO DI SFONDO ===== */
+  .hero__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: bottom center;  /* base del video ancorata in basso */
+    background: #000;
+    z-index: 0;
+  }
 
-/* ===== OVERLAY SCURO (RIMOSSO) ===== */
-.hero__overlay {
-  display: none;  /* overlay disattivato come richiesto */
-}
+  /* ===== OVERLAY SCURO (RIMOSSO) ===== */
+  .hero__overlay {
+    display: none;  /* overlay disattivato come richiesto */
+  }
 
-/* ===== TITOLO HERO ===== */
-.hero__title {
-  --title-percent: 20; /* percentuale di spostamento extra (numero puro) */
-
-  position: absolute;
-  top: calc(100px + max(100px, (100% - 100px) * (var(--title-percent) / 100)) - 100px);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-
-  color: #000;                                              /* TESTO NERO */
-  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.7);        /* OMBRA BIANCA */
-  /*font-family: 'Mencken Std Head Narrow ExtraBold';*/
-  font-family: "mencken-std-narrow", sans-serif;
-  font-weight: 700;
-  text-align: center;
-  width: 90%;
-  max-width: 1200px;
-  line-height: 1.1;
-
-  /* Default: landscape (desktop, tablet orizzontali) */
-  font-size: clamp(3.2rem, 5vw, 6rem);
-}
-
-/* Dispositivi in portrait: crescita più rapida per smartphone larghi */
-@media (orientation: portrait) {
+  /* ===== TITOLO HERO ===== */
   .hero__title {
-    font-size: clamp(3.2rem, 6vw, 6rem);
+    --title-percent: 20; /* percentuale di spostamento extra (numero puro) */
+
+    position: absolute;
+    top: calc(100px + max(100px, (100% - 100px) * (var(--title-percent) / 100)) - 100px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+
+    color: #000;                                              /* TESTO NERO */
+    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.7);        /* OMBRA BIANCA */
+    font-family: "mencken-std-narrow", sans-serif;
+    font-weight: 700;
+    text-align: center;
+    width: 90%;
+    max-width: 1200px;
+    line-height: 1.1;
+
+    /* Default: landscape (desktop, tablet orizzontali) */
+    font-size: clamp(3.2rem, 5vw, 6rem);
   }
-}
 
-/* ===== PARAGRAFO ESTERNO ===== */
-.intro-text {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 4rem 2rem;
-  background: #fff;
-}
+  /* Mobile: padding laterale di 40px */
+  @media (max-width: 767px) {
+    .hero__title {
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+  }
 
-.intro-text__paragraph {
-  max-width: 800px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  color: #111;
-  text-align: center;
-}
+  /* Dispositivi in portrait: crescita più rapida per smartphone larghi */
+  @media (orientation: portrait) {
+    .hero__title {
+      font-size: clamp(3.2rem, 6vw, 6rem);
+    }
+  }
 
-/* Dimensioni paragrafo (Inter Regular) */
-.intro-text__paragraph {
-  font-size: 18px;
-  line-height: 27px;
-}
+  /* Telefono in landscape: altezza hero fissa per più spazio al testo */
+  @media (orientation: landscape) and (max-height: 600px) {
+    .hero {
+      height: 650px;
+    }
 
-/* LG – 1024px */
-@media (min-width: 1024px) {
+    .hero__video {
+      object-position: bottom center;
+    }
+  }
+
+  /* ===== PARAGRAFO ESTERNO ===== */
+  .intro-text {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 4rem 2rem;
+    background: #fff;
+  }
+
   .intro-text__paragraph {
-    font-size: 20px;
-    line-height: 30px;
+    max-width: 800px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    color: #111;
+    text-align: center;
   }
-}
 
-/* XL – 1280px */
-@media (min-width: 1280px) {
+  /* Dimensioni paragrafo (Inter Regular) */
   .intro-text__paragraph {
-    font-size: 22px;
-    line-height: 34px;
+    font-size: 18px;
+    line-height: 27px;
   }
-}
 
-/* 2XL – 1600px */
-@media (min-width: 1600px) {
-  .intro-text__paragraph {
-    font-size: 24px;
-    line-height: 36px;
+  /* LG – 1024px */
+  @media (min-width: 1024px) {
+    .intro-text__paragraph {
+      font-size: 20px;
+      line-height: 30px;
+    }
   }
-}
+
+  /* XL – 1280px */
+  @media (min-width: 1280px) {
+    .intro-text__paragraph {
+      font-size: 22px;
+      line-height: 34px;
+    }
+  }
+
+  /* 2XL – 1600px */
+  @media (min-width: 1600px) {
+    .intro-text__paragraph {
+      font-size: 24px;
+      line-height: 36px;
+    }
+  }
   </style>
 </head>
 <body>
 
   <!-- HERO -->
   <section class="hero">
-  <nav class="navbar">Logo / Menu</nav>
+    <nav class="navbar">Logo / Menu</nav>
 
-  <video class="hero__video"
-       autoplay muted loop playsinline
-       preload="auto"
-       poster="https://sashimiarigato1984.github.io/Fifa-2026/poster.jpg">
-  <!-- Qualsiasi dispositivo in portrait (telefoni, tablet verticali) → video 3:4 wide -->
-  <source src="https://sashimiarigato1984.github.io/Fifa-2026/Hero_Mobile_Wide_v3.mp4" type="video/mp4"
-          media="(orientation: portrait)">
-  <!-- Qualsiasi dispositivo in landscape (desktop, tablet orizzontali) → video 16:9 -->
-  <source src="https://sashimiarigato1984.github.io/Fifa-2026/Hero_Desk_v3.mp4" type="video/mp4"
-          media="(orientation: landscape)">
-</video>
+    <video class="hero__video"
+           autoplay muted loop playsinline
+           preload="auto"
+           poster="https://sashimiarigato1984.github.io/Fifa-2026/poster.jpg">
+      <!-- Qualsiasi dispositivo in portrait (telefoni, tablet verticali) → video 3:4 wide -->
+      <source src="https://sashimiarigato1984.github.io/Fifa-2026/Hero_Mobile_Wide_v3.mp4" type="video/mp4"
+              media="(orientation: portrait)">
+      <!-- Qualsiasi dispositivo in landscape (desktop, tablet orizzontali) → video 16:9 -->
+      <source src="https://sashimiarigato1984.github.io/Fifa-2026/Hero_Desk_v3.mp4" type="video/mp4"
+              media="(orientation: landscape)">
+    </video>
 
-
-
-  <h1 class="hero__title">Vivere nell’era dell’intelligenza artificiale</h1>
-</section>
+    <h1 class="hero__title">Vivere nell’era dell’intelligenza artificiale</h1>
+  </section>
 
   <!-- PARAGRAFO ESTERNO (subito dopo la hero) -->
   <section class="intro-text">
