@@ -121,7 +121,7 @@
   }
 }
 
-/* Telefono in landscape: hero più alta + velina condensata */
+/* Telefono in landscape: hero più alta + velina condensata e morbida */
 @media (orientation: landscape) and (max-height: 600px) {
   .hero {
     height: 750px;            /* altezza fissa per dare aria al titolo */
@@ -131,14 +131,15 @@
     object-position: bottom center;
   }
 
-  /* Velina: bianco pieno più esteso, dissolvenza più morbida */
+  /* Velina: bianco pieno più esteso, dissolvenza molto morbida */
   .hero__velina {
     background: linear-gradient(
       to bottom,
       rgba(255, 255, 255, 1) 0%,
-      rgba(255, 255, 255, 1) 40%,      /* bianco pieno fino a 300px (copre 2 righe + margine) */
-      rgba(255, 255, 255, 0.6) 48%,    /* inizia a sfumare dolcemente a 360px */
-      rgba(255, 255, 255, 0) 60%       /* trasparenza raggiunta a 450px */
+      rgba(255, 255, 255, 1) 45%,      /* bianco pieno fino a 337px (copre titolo + spazio extra) */
+      rgba(255, 255, 255, 0.7) 55%,    /* inizia a sfumare dolcemente a 412px */
+      rgba(255, 255, 255, 0.3) 65%,    /* trasparenza parziale a 487px */
+      rgba(255, 255, 255, 0) 75%       /* completamente trasparente a 562px */
     );
   }
 }
