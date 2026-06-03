@@ -6,217 +6,228 @@
   <title>Hero AI New</title>
   <link rel="stylesheet" href="https://use.typekit.net/hlq4prx.css">
   <style>
-
-  @font-face {
-    font-family: "mencken-std-narrow";
-    src: url(https://use.typekit.net/af/6da39a/0000000…/31/l?primer=7cdcb44…&fvd=n8&v=3) format("woff2"), url(https://use.typekit.net/af/6da39a/0000000…/31/d?primer=7cdcb44…&fvd=n8&v=3) format("woff"), url(https://use.typekit.net/af/6da39a/0000000…/31/a?primer=7cdcb44…&fvd=n8&v=3) format("opentype");
-    font-display: auto;
-    font-style: normal;
-    font-weight: 800;
-    font-stretch: normal;
-  }
-
-  /* ===== RESET ===== */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  /* ===== FRECCIA ANIMATA (fissa in fondo alla viewport) ===== */
-  .arrow-wrapper {
-    position: fixed;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    pointer-events: none;
-    background-color: black;
-    border-radius: 24px;
-    padding: 6px;
-  }
-
-  .arrow-inner {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: bounce 2s infinite;
-  }
-
-  @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-      transform: translateY(0);
+    /* ===== FONT FACE (MENCKEN STD NARROW EXTRA BOLD) ===== */
+    @font-face {
+      font-family: "mencken-std-narrow";
+      src: url(https://use.typekit.net/af/6da39a/0000000…/31/l?primer=7cdcb44…&fvd=n8&v=3) format("woff2"),
+           url(https://use.typekit.net/af/6da39a/0000000…/31/d?primer=7cdcb44…&fvd=n8&v=3) format("woff"),
+           url(https://use.typekit.net/af/6da39a/0000000…/31/a?primer=7cdcb44…&fvd=n8&v=3) format("opentype");
+      font-display: auto;
+      font-style: normal;
+      font-weight: 800;
+      font-stretch: normal;
     }
-    40% {
-      transform: translateY(-10px);
+
+    /* ===== RESET ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    60% {
-      transform: translateY(-5px);
+
+    /* ===== FRECCIA ANIMATA (FISSA IN FONDO ALLA VIEWPORT) ===== */
+    .arrow-wrapper {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      pointer-events: none;
+      background-color: black;
+      border-radius: 24px;
+      padding: 6px;
     }
-  }
 
-  /* ===== HERO CONTAINER ===== */
-  .hero {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    height: 100dvh;
-    overflow: hidden;
-  }
-
-  /* ===== NAVBAR ASSOLUTA ===== */
-  .navbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    background: rgba(0, 0, 0, 0.9);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    padding: 0 2rem;
-    z-index: 10;
-  }
-
-  /* ===== VIDEO DI SFONDO ===== */
-  .hero__video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: bottom center;
-    background: #000;
-    z-index: 0;
-  }
-
-  /* ===== VELINA BIANCA SFUMATA ===== */
-  /* Su desktop (>1024px) è completamente trasparente */
-  .hero__velina {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    pointer-events: none;
-    /* nessuno sfondo */
-  }
-
-  /* Tablet e smartphone (fino a 1024px) → gradiente ancorato al viewport */
-  @media (max-width: 1024px) {
-    .hero__velina {
-      background: linear-gradient(
-        180deg,
-        #FFF 14.62vh,
-        rgba(255, 255, 255, 0.75) 26.09vh,
-        rgba(255, 255, 255, 0.50) 37.56vh,
-        rgba(255, 255, 255, 0.00) 60.51vh
-      );
+    .arrow-inner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: bounce 2s infinite;
     }
-  }
 
-  /* ===== OVERLAY SCURO (RIMOSSO) ===== */
-  .hero__overlay {
-    display: none;
-  }
-
-  /* ===== TITOLO HERO ===== */
-  .hero__title {
-    --title-percent: 20;
-
-    position: absolute;
-    top: calc(100px + max(100px, (100% - 100px) * (var(--title-percent) / 100)) - 80px);
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-
-    color: #000;
-    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.7);
-    font-family: "mencken-std-narrow", sans-serif;
-    font-weight: 700;
-    text-align: center;
-    width: 90%;
-    max-width: 1200px;
-    line-height: 1.1;
-
-    font-size: clamp(3.2rem, 5vw, 6rem);
-  }
-
-  /* Dispositivi in portrait: crescita più rapida per smartphone larghi */
-  @media (orientation: portrait) {
-    .hero__title {
-      font-size: clamp(3.2rem, 6vw, 6rem);
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
     }
-  }
 
-  /* Schermi bassi (smartphone): solo padding laterale */
-  @media (max-height: 600px) {
-    .hero__title {
-      padding-left: 40px;
-      padding-right: 40px;
-    }
-  }
-
-  /* Telefono in landscape: hero più alta */
-  @media (orientation: landscape) and (max-height: 600px) {
+    /* ===== HERO CONTAINER ===== */
     .hero {
-      height: 750px;
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
     }
 
+    /* ===== NAVBAR ASSOLUTA ===== */
+    .navbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: rgba(0, 0, 0, 0.9);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      z-index: 10;
+    }
+
+    /* ===== VIDEO DI SFONDO ===== */
     .hero__video {
-      object-position: bottom center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: bottom center;  /* base del video ancorata in basso */
+      background: #000;
+      z-index: 0;
     }
-  }
 
-  /* ===== PARAGRAFO ESTERNO ===== */
-  .intro-text {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 4rem 2rem;
-    background: #fff;
-  }
+    /* ===== VELINA BIANCA SFUMATA ===== */
+    /* Su desktop (>1024px) è completamente trasparente */
+    .hero__velina {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
 
-  .intro-text__paragraph {
-    max-width: 800px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    color: #111;
-    text-align: center;
-  }
+    /* Tablet e smartphone (fino a 1024px) → gradiente ancorato al viewport */
+    @media (max-width: 1024px) {
+      .hero__velina {
+        background: linear-gradient(
+          180deg,
+          #FFF 14.62vh,
+          rgba(255, 255, 255, 0.75) 26.09vh,
+          rgba(255, 255, 255, 0.50) 37.56vh,
+          rgba(255, 255, 255, 0.00) 60.51vh
+        );
+      }
+    }
 
-  .intro-text__paragraph {
-    font-size: 18px;
-    line-height: 27px;
-  }
+    /* ===== OVERLAY SCURO (RIMOSSO) ===== */
+    .hero__overlay {
+      display: none;
+    }
 
-  @media (min-width: 1024px) {
+    /* ===== TITOLO HERO ===== */
+    .hero__title {
+      --title-percent: 20; /* percentuale di spostamento extra */
+
+      position: absolute;
+      /* 100px (navbar) + margine minimo 100px e 20% dello spazio rimanente, il tutto meno 80px */
+      top: calc(100px + max(100px, (100% - 100px) * (var(--title-percent) / 100)) - 80px);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+
+      color: #000;                                              /* TESTO NERO */
+      text-shadow: 0 2px 10px rgba(255, 255, 255, 0.7);        /* OMBRA BIANCA */
+      font-family: "mencken-std-narrow", sans-serif;
+      font-weight: 700;
+      text-align: center;
+      width: 90%;
+      max-width: 1200px;
+      line-height: 1.1;
+
+      /* Dimensione default (desktop e smartphone) */
+      font-size: clamp(3.2rem, 5vw, 6rem);
+    }
+
+    /* Tablet (larghezza 768‑1024px) – titolo più grande */
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .hero__title {
+        font-size: clamp(5rem, 6vw, 6rem);
+      }
+    }
+
+    /* Dispositivi in portrait: crescita più rapida per smartphone larghi */
+    @media (orientation: portrait) {
+      .hero__title {
+        font-size: clamp(3.2rem, 6vw, 6rem);
+      }
+    }
+
+    /* Schermi bassi (smartphone, sia portrait che landscape): solo padding laterale */
+    @media (max-height: 600px) {
+      .hero__title {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+    }
+
+    /* Telefono in landscape: hero più alta per dare spazio al testo */
+    @media (orientation: landscape) and (max-height: 600px) {
+      .hero {
+        height: 900px;
+      }
+
+      .hero__video {
+        object-position: bottom center;
+      }
+    }
+
+    /* ===== PARAGRAFO ESTERNO ===== */
+    .intro-text {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 4rem 2rem;
+      background: #fff;
+    }
+
     .intro-text__paragraph {
-      font-size: 20px;
-      line-height: 30px;
+      max-width: 800px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      color: #111;
+      text-align: center;
     }
-  }
 
-  @media (min-width: 1280px) {
+    /* Dimensioni paragrafo (Inter Regular) */
     .intro-text__paragraph {
-      font-size: 22px;
-      line-height: 34px;
+      font-size: 18px;
+      line-height: 27px;
     }
-  }
 
-  @media (min-width: 1600px) {
-    .intro-text__paragraph {
-      font-size: 24px;
-      line-height: 36px;
+    @media (min-width: 1024px) {
+      .intro-text__paragraph {
+        font-size: 20px;
+        line-height: 30px;
+      }
     }
-  }
+
+    @media (min-width: 1280px) {
+      .intro-text__paragraph {
+        font-size: 22px;
+        line-height: 34px;
+      }
+    }
+
+    @media (min-width: 1600px) {
+      .intro-text__paragraph {
+        font-size: 24px;
+        line-height: 36px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -229,25 +240,30 @@
            autoplay muted loop playsinline
            preload="auto"
            poster="https://sashimiarigato1984.github.io/Fifa-2026/poster.jpg">
+      <!-- Ritratto (smartphone, tablet verticali) → video 3:4 wide -->
       <source src="https://sashimiarigato1984.github.io/Fifa-2026/Hero_Mobile_Wide_v3.mp4" type="video/mp4"
               media="(orientation: portrait)">
+      <!-- Orizzontale (desktop, tablet landscape) → video 16:9 -->
       <source src="https://sashimiarigato1984.github.io/Fifa-2026/Hero_Desk_v3.mp4" type="video/mp4"
               media="(orientation: landscape)">
     </video>
 
+    <!-- Velina bianca sfumata (solo per dispositivi ≤ 1024px) -->
     <div class="hero__velina"></div>
 
     <h1 class="hero__title">Vivere nell’era dell’intelligenza artificiale</h1>
 
+    <!-- Freccia animata (sempre visibile) -->
     <div class="arrow-wrapper">
       <div class="arrow-inner">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M12 5v14M19 12l-7 7-7-7"/>
         </svg>
       </div>
     </div>
   </section>
 
+  <!-- PARAGRAFO INTRODUTTIVO (fuori dalla hero) -->
   <section class="intro-text">
     <p class="intro-text__paragraph">
       Questo è il paragrafo introduttivo, posizionato subito dopo la hero. 
