@@ -16,7 +16,7 @@
     font-stretch: normal;
   }
 
-  /* ===== RESET ===== */
+ /* ===== RESET ===== */
 * {
   margin: 0;
   padding: 0;
@@ -113,34 +113,45 @@
   }
 }
 
-/* Schermi bassi (smartphone, sia portrait che landscape): solo padding laterale */
+/* Schermi bassi (smartphone, sia portrait che landscape): padding laterale + velina condensata in alto */
 @media (max-height: 600px) {
   .hero__title {
     padding-left: 40px;
     padding-right: 40px;
+  }
+
+  /* Velina compatta: protegge il titolo ma lascia scoperto il centro/basso */
+  .hero__velina {
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 1) 15%,      /* bianco pieno solo fino al 15% (circa 90px su 600px) */
+      rgba(255, 255, 255, 0.5) 25%,    /* sfuma rapidamente */
+      rgba(255, 255, 255, 0) 35%       /* trasparente già al 35% (210px) */
+    );
   }
 }
 
 /* Telefono in landscape: hero più alta + velina estesa e dissolvenza ultra-morbida */
 @media (orientation: landscape) and (max-height: 600px) {
   .hero {
-    height: 750px;            /* altezza fissa per dare aria al titolo */
+    height: 750px;
   }
 
   .hero__video {
     object-position: bottom center;
   }
 
-  /* Velina: bianco pieno più ampio, dissolvenza molto graduale */
+  /* Velina landscape: bianco pieno più ampio, dissolvenza molto graduale */
   .hero__velina {
     background: linear-gradient(
       to bottom,
       rgba(255, 255, 255, 1) 0%,
-      rgba(255, 255, 255, 1) 55%,      /* bianco pieno fino a 412px (copre titolo + ampio margine) */
-      rgba(255, 255, 255, 0.8) 63%,    /* inizio sfumatura morbida a 472px */
-      rgba(255, 255, 255, 0.5) 70%,    /* metà trasparenza a 525px */
-      rgba(255, 255, 255, 0.2) 78%,    /* quasi trasparente a 585px */
-      rgba(255, 255, 255, 0) 85%       /* completamente trasparente a 637px */
+      rgba(255, 255, 255, 1) 55%,      /* bianco pieno fino a 412px */
+      rgba(255, 255, 255, 0.8) 63%,
+      rgba(255, 255, 255, 0.5) 70%,
+      rgba(255, 255, 255, 0.2) 78%,
+      rgba(255, 255, 255, 0) 85%
     );
   }
 }
