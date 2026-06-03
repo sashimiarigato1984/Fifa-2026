@@ -16,192 +16,228 @@
     font-stretch: normal;
   }
 
- /* ===== RESET ===== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* ===== HERO CONTAINER ===== */
-.hero {
-  position: relative;
-  width: 100%;
-  height: 100vh;   /* fallback */
-  height: 100dvh;  /* altezza dinamica su mobile */
-  overflow: hidden;
-}
-
-/* ===== NAVBAR ASSOLUTA ===== */
-.navbar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100px;
-  background: rgba(0, 0, 0, 0.9);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  padding: 0 2rem;
-  z-index: 10;
-}
-
-/* ===== VIDEO DI SFONDO ===== */
-.hero__video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: bottom center;  /* base del video ancorata in basso */
-  background: #000;
-  z-index: 0;
-}
-
-/* ===== VELINA BIANCA SFUMATA (versione standard per desktop/tablet) ===== */
-.hero__velina {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0.7) 30%,
-    rgba(255, 255, 255, 0) 60%
-  );
-  z-index: 1;                /* sopra il video, sotto il titolo */
-  pointer-events: none;      /* non blocca interazioni */
-}
-
-/* ===== OVERLAY SCURO (RIMOSSO) ===== */
-.hero__overlay {
-  display: none;
-}
-
-/* ===== TITOLO HERO ===== */
-.hero__title {
-  --title-percent: 20; /* percentuale di spostamento extra (numero puro) */
-
-  position: absolute;
-  /* Formula con -80px: titolo alzato ma non attaccato alla navbar */
-  top: calc(100px + max(100px, (100% - 100px) * (var(--title-percent) / 100)) - 80px);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-
-  color: #000;                                              /* TESTO NERO */
-  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.7);        /* OMBRA BIANCA */
-  font-family: "mencken-std-narrow", sans-serif;
-  font-weight: 700;
-  text-align: center;
-  width: 90%;
-  max-width: 1200px;
-  line-height: 1.1;
-
-  /* Default: landscape (desktop, tablet orizzontali) */
-  font-size: clamp(3.2rem, 5vw, 6rem);
-}
-
-/* Dispositivi in portrait: crescita più rapida per smartphone larghi */
-@media (orientation: portrait) {
-  .hero__title {
-    font-size: clamp(3.2rem, 6vw, 6rem);
-  }
-}
-
-/* Schermi bassi (smartphone, sia portrait che landscape): padding laterale + velina condensata in alto */
-@media (max-height: 600px) {
-  .hero__title {
-    padding-left: 40px;
-    padding-right: 40px;
+  /* ===== RESET ===== */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
 
-  /* Velina compatta: protegge il titolo ma lascia scoperto il centro/basso */
-  .hero__velina {
-    background: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 1) 0%,
-      rgba(255, 255, 255, 1) 15%,      /* bianco pieno solo fino al 15% (circa 90px su 600px) */
-      rgba(255, 255, 255, 0.5) 25%,    /* sfuma rapidamente */
-      rgba(255, 255, 255, 0) 35%       /* trasparente già al 35% (210px) */
-    );
+  /* ===== FRECCIA ANIMATA (fissa in fondo alla viewport) ===== */
+  .arrow-wrapper {
+    position: fixed;                      /* rimane visibile durante lo scroll */
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    pointer-events: none;
+    background-color: black;
+    border-radius: 24px;
+    padding: 6px;
   }
-}
 
-/* Telefono in landscape: hero più alta + velina estesa e dissolvenza ultra-morbida */
-@media (orientation: landscape) and (max-height: 600px) {
+  .arrow-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-10px);
+    }
+    60% {
+      transform: translateY(-5px);
+    }
+  }
+
+  /* ===== HERO CONTAINER ===== */
   .hero {
-    height: 750px;
+    position: relative;
+    width: 100%;
+    height: 100vh;   /* fallback */
+    height: 100dvh;  /* altezza dinamica su mobile */
+    overflow: hidden;
   }
 
+  /* ===== NAVBAR ASSOLUTA ===== */
+  .navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    z-index: 10;
+  }
+
+  /* ===== VIDEO DI SFONDO ===== */
   .hero__video {
-    object-position: bottom center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: bottom center;  /* base del video ancorata in basso */
+    background: #000;
+    z-index: 0;
   }
 
-  /* Velina landscape: bianco pieno più ampio, dissolvenza molto graduale */
+  /* ===== VELINA BIANCA SFUMATA (versione standard per desktop/tablet) ===== */
   .hero__velina {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: linear-gradient(
       to bottom,
       rgba(255, 255, 255, 1) 0%,
-      rgba(255, 255, 255, 1) 55%,      /* bianco pieno fino a 412px */
-      rgba(255, 255, 255, 0.8) 63%,
-      rgba(255, 255, 255, 0.5) 70%,
-      rgba(255, 255, 255, 0.2) 78%,
-      rgba(255, 255, 255, 0) 85%
+      rgba(255, 255, 255, 0.7) 30%,
+      rgba(255, 255, 255, 0) 60%
     );
+    z-index: 1;                /* sopra il video, sotto il titolo */
+    pointer-events: none;      /* non blocca interazioni */
   }
-}
 
-/* ===== PARAGRAFO ESTERNO ===== */
-.intro-text {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 4rem 2rem;
-  background: #fff;
-}
+  /* ===== OVERLAY SCURO (RIMOSSO) ===== */
+  .hero__overlay {
+    display: none;
+  }
 
-.intro-text__paragraph {
-  max-width: 800px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  color: #111;
-  text-align: center;
-}
+  /* ===== TITOLO HERO ===== */
+  .hero__title {
+    --title-percent: 20; /* percentuale di spostamento extra (numero puro) */
 
-/* Dimensioni paragrafo (Inter Regular) */
-.intro-text__paragraph {
-  font-size: 18px;
-  line-height: 27px;
-}
+    position: absolute;
+    /* Formula con -80px: titolo alzato ma non attaccato alla navbar */
+    top: calc(100px + max(100px, (100% - 100px) * (var(--title-percent) / 100)) - 80px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
 
-/* LG – 1024px */
-@media (min-width: 1024px) {
+    color: #000;                                              /* TESTO NERO */
+    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.7);        /* OMBRA BIANCA */
+    font-family: "mencken-std-narrow", sans-serif;
+    font-weight: 700;
+    text-align: center;
+    width: 90%;
+    max-width: 1200px;
+    line-height: 1.1;
+
+    /* Default: landscape (desktop, tablet orizzontali) */
+    font-size: clamp(3.2rem, 5vw, 6rem);
+  }
+
+  /* Dispositivi in portrait: crescita più rapida per smartphone larghi */
+  @media (orientation: portrait) {
+    .hero__title {
+      font-size: clamp(3.2rem, 6vw, 6rem);
+    }
+  }
+
+  /* Schermi bassi (smartphone, sia portrait che landscape): padding laterale + velina condensata in alto */
+  @media (max-height: 600px) {
+    .hero__title {
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+
+    /* Velina compatta: protegge il titolo ma lascia scoperto il centro/basso */
+    .hero__velina {
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(255, 255, 255, 1) 15%,      /* bianco pieno solo fino al 15% (circa 90px su 600px) */
+        rgba(255, 255, 255, 0.5) 25%,    /* sfuma rapidamente */
+        rgba(255, 255, 255, 0) 35%       /* trasparente già al 35% (210px) */
+      );
+    }
+  }
+
+  /* Telefono in landscape: hero più alta + velina estesa e dissolvenza ultra-morbida */
+  @media (orientation: landscape) and (max-height: 600px) {
+    .hero {
+      height: 750px;
+    }
+
+    .hero__video {
+      object-position: bottom center;
+    }
+
+    /* Velina landscape: bianco pieno più ampio, dissolvenza molto graduale */
+    .hero__velina {
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(255, 255, 255, 1) 55%,      /* bianco pieno fino a 412px */
+        rgba(255, 255, 255, 0.8) 63%,
+        rgba(255, 255, 255, 0.5) 70%,
+        rgba(255, 255, 255, 0.2) 78%,
+        rgba(255, 255, 255, 0) 85%
+      );
+    }
+  }
+
+  /* ===== PARAGRAFO ESTERNO ===== */
+  .intro-text {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 4rem 2rem;
+    background: #fff;
+  }
+
   .intro-text__paragraph {
-    font-size: 20px;
-    line-height: 30px;
+    max-width: 800px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    color: #111;
+    text-align: center;
   }
-}
 
-/* XL – 1280px */
-@media (min-width: 1280px) {
+  /* Dimensioni paragrafo (Inter Regular) */
   .intro-text__paragraph {
-    font-size: 22px;
-    line-height: 34px;
+    font-size: 18px;
+    line-height: 27px;
   }
-}
 
-/* 2XL – 1600px */
-@media (min-width: 1600px) {
-  .intro-text__paragraph {
-    font-size: 24px;
-    line-height: 36px;
+  /* LG – 1024px */
+  @media (min-width: 1024px) {
+    .intro-text__paragraph {
+      font-size: 20px;
+      line-height: 30px;
+    }
   }
-}
+
+  /* XL – 1280px */
+  @media (min-width: 1280px) {
+    .intro-text__paragraph {
+      font-size: 22px;
+      line-height: 34px;
+    }
+  }
+
+  /* 2XL – 1600px */
+  @media (min-width: 1600px) {
+    .intro-text__paragraph {
+      font-size: 24px;
+      line-height: 36px;
+    }
+  }
   </style>
 </head>
 <body>
@@ -226,6 +262,15 @@
     <div class="hero__velina"></div>
 
     <h1 class="hero__title">Vivere nell’era dell’intelligenza artificiale</h1>
+
+    <!-- Freccia animata (fissa, visibile anche dopo lo scroll) -->
+    <div class="arrow-wrapper">
+      <div class="arrow-inner">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14M19 12l-7 7-7-7"/>
+        </svg>
+      </div>
+    </div>
   </section>
 
   <!-- PARAGRAFO ESTERNO (subito dopo la hero) -->
