@@ -131,14 +131,14 @@
     object-position: bottom center;
   }
 
-  /* Velina bianca concentrata in alto, dissolvenza rapida */
+  /* Velina bianca concentrata in alto, dissolvenza rapida dopo il testo */
   .hero__velina {
     background: linear-gradient(
       to bottom,
       rgba(255, 255, 255, 1) 0%,
-      rgba(255, 255, 255, 1) 20%,      /* bianco pieno fino al titolo (150px) */
-      rgba(255, 255, 255, 0.8) 25%,    /* inizia a sfumare a 187px */
-      rgba(255, 255, 255, 0) 40%       /* completamente trasparente a 300px */
+      rgba(255, 255, 255, 1) 35%,      /* bianco pieno fino a ~262px (copre 2 righe) */
+      rgba(255, 255, 255, 0.6) 38%,    /* leggera dissolvenza a 285px */
+      rgba(255, 255, 255, 0) 45%       /* completamente trasparente a 337px */
     );
   }
 }
