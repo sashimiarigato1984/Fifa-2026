@@ -17,177 +17,178 @@
   }
 
   /* ===== RESET ===== */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  /* ===== HERO CONTAINER ===== */
+/* ===== HERO CONTAINER ===== */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;   /* fallback */
+  height: 100dvh;  /* altezza dinamica su mobile */
+  overflow: hidden;
+}
+
+/* ===== NAVBAR ASSOLUTA ===== */
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  z-index: 10;
+}
+
+/* ===== VIDEO DI SFONDO ===== */
+.hero__video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: bottom center;  /* base del video ancorata in basso */
+  background: #000;
+  z-index: 0;
+}
+
+/* ===== VELINA BIANCA SFUMATA (versione standard per desktop/tablet) ===== */
+.hero__velina {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.7) 30%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  z-index: 1;                /* sopra il video, sotto il titolo */
+  pointer-events: none;      /* non blocca interazioni */
+}
+
+/* ===== OVERLAY SCURO (RIMOSSO) ===== */
+.hero__overlay {
+  display: none;
+}
+
+/* ===== TITOLO HERO ===== */
+.hero__title {
+  --title-percent: 20; /* percentuale di spostamento extra (numero puro) */
+
+  position: absolute;
+  /* Formula con -80px: titolo alzato ma non attaccato alla navbar */
+  top: calc(100px + max(100px, (100% - 100px) * (var(--title-percent) / 100)) - 80px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+
+  color: #000;                                              /* TESTO NERO */
+  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.7);        /* OMBRA BIANCA */
+  font-family: "mencken-std-narrow", sans-serif;
+  font-weight: 700;
+  text-align: center;
+  width: 90%;
+  max-width: 1200px;
+  line-height: 1.1;
+
+  /* Default: landscape (desktop, tablet orizzontali) */
+  font-size: clamp(3.2rem, 5vw, 6rem);
+}
+
+/* Dispositivi in portrait: crescita più rapida per smartphone larghi */
+@media (orientation: portrait) {
+  .hero__title {
+    font-size: clamp(3.2rem, 6vw, 6rem);
+  }
+}
+
+/* Schermi bassi (smartphone, sia portrait che landscape): solo padding laterale */
+@media (max-height: 600px) {
+  .hero__title {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+
+/* Telefono in landscape: hero più alta + velina condensata */
+@media (orientation: landscape) and (max-height: 600px) {
   .hero {
-    position: relative;
-    width: 100%;
-    height: 100vh;   /* fallback */
-    height: 100dvh;  /* altezza dinamica su mobile */
-    overflow: hidden;
+    height: 750px;            /* altezza fissa per dare aria al titolo */
   }
 
-  /* ===== NAVBAR ASSOLUTA ===== */
-  .navbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    background: rgba(0, 0, 0, 0.9);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    padding: 0 2rem;
-    z-index: 10;
-  }
-
-  /* ===== VIDEO DI SFONDO ===== */
   .hero__video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: bottom center;  /* base del video ancorata in basso */
-    background: #000;
-    z-index: 0;
+    object-position: bottom center;
   }
 
-  /* ===== VELINA BIANCA SFUMATA ===== */
+  /* Velina bianca concentrata in alto, dissolvenza rapida */
   .hero__velina {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     background: linear-gradient(
       to bottom,
       rgba(255, 255, 255, 1) 0%,
-      rgba(255, 255, 255, 0.7) 30%,
-      rgba(255, 255, 255, 0) 60%
+      rgba(255, 255, 255, 1) 20%,      /* bianco pieno fino al titolo (150px) */
+      rgba(255, 255, 255, 0.8) 25%,    /* inizia a sfumare a 187px */
+      rgba(255, 255, 255, 0) 40%       /* completamente trasparente a 300px */
     );
-    z-index: 1;                /* sopra il video, sotto il titolo */
-    pointer-events: none;      /* non blocca interazioni */
   }
+}
 
-  /* ===== OVERLAY SCURO (RIMOSSO) ===== */
-  .hero__overlay {
-    display: none;
-  }
+/* ===== PARAGRAFO ESTERNO ===== */
+.intro-text {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background: #fff;
+}
 
-  /* ===== TITOLO HERO ===== */
-  .hero__title {
-    --title-percent: 20; /* percentuale di spostamento extra (numero puro) */
+.intro-text__paragraph {
+  max-width: 800px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  color: #111;
+  text-align: center;
+}
 
-    position: absolute;
-    /* Formula con -80px: titolo alzato ma non attaccato alla navbar */
-    top: calc(100px + max(100px, (100% - 100px) * (var(--title-percent) / 100)) - 80px);
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
+/* Dimensioni paragrafo (Inter Regular) */
+.intro-text__paragraph {
+  font-size: 18px;
+  line-height: 27px;
+}
 
-    color: #000;                                              /* TESTO NERO */
-    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.7);        /* OMBRA BIANCA */
-    font-family: "mencken-std-narrow", sans-serif;
-    font-weight: 700;
-    text-align: center;
-    width: 90%;
-    max-width: 1200px;
-    line-height: 1.1;
-
-    /* Default: landscape (desktop, tablet orizzontali) */
-    font-size: clamp(3.2rem, 5vw, 6rem);
-  }
-
-  /* Dispositivi in portrait: crescita più rapida per smartphone larghi */
-  @media (orientation: portrait) {
-    .hero__title {
-      font-size: clamp(3.2rem, 6vw, 6rem);
-    }
-  }
-
-  /* Schermi bassi (smartphone): solo padding laterale */
-  @media (max-height: 600px) {
-    .hero__title {
-      padding-left: 40px;
-      padding-right: 40px;
-    }
-  }
-
-  /* Telefono in landscape: hero più alta + velina estesa */
-  @media (orientation: landscape) and (max-height: 600px) {
-    .hero {
-      height: 750px;            /* altezza fissa per dare aria al titolo */
-    }
-
-    .hero__video {
-      object-position: bottom center;
-    }
-
-    /* Velina più coprente e profonda */
-    .hero__velina {
-      background: linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 1) 0%,
-        rgba(255, 255, 255, 0.9) 55%,   /* copre oltre metà hero */
-        rgba(255, 255, 255, 0) 85%
-      );
-    }
-  }
-
-  /* ===== PARAGRAFO ESTERNO ===== */
-  .intro-text {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 4rem 2rem;
-    background: #fff;
-  }
-
+/* LG – 1024px */
+@media (min-width: 1024px) {
   .intro-text__paragraph {
-    max-width: 800px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    color: #111;
-    text-align: center;
+    font-size: 20px;
+    line-height: 30px;
   }
+}
 
-  /* Dimensioni paragrafo (Inter Regular) */
+/* XL – 1280px */
+@media (min-width: 1280px) {
   .intro-text__paragraph {
-    font-size: 18px;
-    line-height: 27px;
+    font-size: 22px;
+    line-height: 34px;
   }
+}
 
-  /* LG – 1024px */
-  @media (min-width: 1024px) {
-    .intro-text__paragraph {
-      font-size: 20px;
-      line-height: 30px;
-    }
+/* 2XL – 1600px */
+@media (min-width: 1600px) {
+  .intro-text__paragraph {
+    font-size: 24px;
+    line-height: 36px;
   }
-
-  /* XL – 1280px */
-  @media (min-width: 1280px) {
-    .intro-text__paragraph {
-      font-size: 22px;
-      line-height: 34px;
-    }
-  }
-
-  /* 2XL – 1600px */
-  @media (min-width: 1600px) {
-    .intro-text__paragraph {
-      font-size: 24px;
-      line-height: 36px;
-    }
-  }
+}
   </style>
 </head>
 <body>
